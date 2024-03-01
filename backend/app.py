@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from applications import create_app
 from applications.common.utils.http import fail_api
 from applications.extensions import db
-
+import traceback
 debug_mode = False
 app = create_app()
 
@@ -22,7 +22,7 @@ def before():
 def error_handler(e):
     if debug_mode:
         traceback.print_exc()
-    return fail_api("后端出现异常：{}".format(str(e)))
+    return fail_api(traceback.print_exception)
 
 
 migrate = Migrate(app, db)
